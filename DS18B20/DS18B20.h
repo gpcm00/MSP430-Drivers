@@ -58,7 +58,12 @@
 #define TS_CYCLE_DELAY_W  18                        // amount of cycles needed to delay for the write bit
 #define TS_CYCLE_DELAY_R  11                        // amount of cycles needed to delay for the read bit
 
-
+// The MSP430F5529 SCLK is 1.048 MHz, so these macros define the amount of clk cycles needed to achieve a certain amount of time
+#define TS_15us         16
+#define TS_30us         31
+#define TS_45us         47
+#define TS_60us         63
+#define TS_480us        503
 
 
 
@@ -108,12 +113,7 @@
 
 
 
-// The MSP430F5529 SCLK is 1.048 MHz, so these macros define the amount of clk cycles needed to achieve a certain amount of time
-#define TS_15us         16                              
-#define TS_30us         31                             
-#define TS_45us         47                              
-#define TS_60us         63                              
-#define TS_480us        503                             
+
 
 #define TS_RST_DELAY    (TS_480us - 3)                  // Needs three less cycles since it takes a couple of clk cycles to drive the outputs
 #define TS_RST_SAMPLE   210                             // Safe amount of clock cycles to sample whether the slave responded after a reset
