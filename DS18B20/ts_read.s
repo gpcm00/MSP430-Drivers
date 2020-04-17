@@ -2,15 +2,15 @@
 ;
 ; Author:		Gian Moreira
 ;
-; Description:	. This function reads a n-bytes using Maxim Integrated 1-wire bus protocol
+; Description:		. This function reads a n-bytes using Maxim Integrated 1-wire bus protocol
 ;
 ; Inputs:		bufLen	-	amount of bytes to be read
 ;
 ; Outputs:		populates the input address with the amount of bytes
 ;
 ; Return:		R12 is register used to pass in the address of the buffer, and the register used to return a value for this
-; 				function, so if this function fails, it wil return an unpredictable value; however, I haven't encountered any
-; 				error so far
+; 			function, so if this function fails, it wil return an unpredictable value; however, I haven't encountered any
+; 			error so far
 ;------------------------------------------------------------------------------------------------------------------------------
         	    .cdecls C,LIST,"msp430.h"   		 			; Include device header file
         	    .cdecls C,LIST,"DS18B20.h"			   			; Include D1S8B20 header file
