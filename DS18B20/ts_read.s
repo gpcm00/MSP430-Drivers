@@ -51,11 +51,11 @@ read_data:			rra.b	0(byte)						; [cycles: 4] shift the contents to the right si
 				mov.b	#TS_CYCLE_DELAY_R, int_ret_reg			; [cycles: 2] move the number of delay cycles needed to delay
 
 				bit.b	#TS_INBIT, &TS_BUS				; [cycles: 3] check the status of the bus
-				jnz		read_H					; [cycles: 2] if the comparisson returns a 0, read the signal as a low
+				jnz	read_H						; [cycles: 2] if the comparisson returns a 0, read the signal as a low
 
 read_L:				bic.b	#BIT7, 0(byte)					; [cycles: 5] set msb low if the input data is a '0'
 				nop							; [cycles: 1] add an extra cycle to match read_H
-				jmp		delay_loop				; [cycles: 2] jump to delay loop
+				jmp	delay_loop					; [cycles: 2] jump to delay loop
 
 
 read_H:				bis.b	#BIT7, 0(byte)					; [cycles: 5] set the msb high if the input data is a '1'
@@ -63,21 +63,21 @@ read_H:				bis.b	#BIT7, 0(byte)					; [cycles: 5] set the msb high if the input 
 				nop							; [cycles: 1] add an extra cycle to match read_H
 				nop							; [cycles: 1] add an extra cycle to make delay cycles a multiple of 3
 
-delay_loop:			dec		int_ret_reg				; [cycles: 1] decrement interation register
-				jnz		delay_loop				; [cycles: 2] keep looping unitl interation register is 0
+delay_loop:			dec	int_ret_reg					; [cycles: 1] decrement interation register
+				jnz	delay_loop					; [cycles: 2] keep looping unitl interation register is 0
 
 recover:			dec.b	oneByteReg					; [cycles: 1] decrement the oneByte register to keep track of the number of bytes read
-				jnz		read_data				; [cycles: 2] jump to read_data to read the next bit
+				jnz	read_data					; [cycles: 2] jump to read_data to read the next bit
 
-prepare_next:	inc		byte							; [cycles: 1] increment cycle to store the next byte in the next address
-				dec		bufLen					; [cycles: 1] decrement the length of the buffer until it reads 0
-				jnz		next_cycle				; [cycles: 2] jump to get the next data
+prepare_next:			inc	byte						; [cycles: 1] increment cycle to store the next byte in the next address
+				dec	bufLen						; [cycles: 1] decrement the length of the buffer until it reads 0
+				jnz	next_cycle					; [cycles: 2] jump to get the next data
 
-				pop		int_ret_reg				; restore whatever was stored inside R15
-				pop		oneByteReg				; restore whatever was stored inside R14
-				pop		bufLen					; restore whatever was stored inside R13
+				pop	int_ret_reg					; restore whatever was stored inside R15
+				pop	oneByteReg					; restore whatever was stored inside R14
+				pop	bufLen						; restore whatever was stored inside R13
 
-				pop		byte					; return the first address of byte
+				pop	byte						; return the first address of byte
 
 
 				reta
