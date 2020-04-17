@@ -11,8 +11,8 @@
 ; Return:		R12 is register used to transmit the byte, and the register used to return a value for this function, so if
 ; 			this function fails, it wil return an unpredictable value; however, I haven't encountered any error so far
 ;------------------------------------------------------------------------------------------------------------------------------
-        	    .cdecls C,LIST,"msp430.h"   		 	; Include device header file
-        	    .cdecls C,LIST,"DS18B20.h"			   	; Include D1S8B20 header file
+        	    .cdecls C,LIST,"msp430.h"   			 	; Include device header file
+        	    .cdecls C,LIST,"DS18B20.h"			   		; Include D1S8B20 header file
 ;------------------------------------------------------------------------------------------------------------------------------
 ; Register definitions
 ;------------------------------------------------------------------------------------------------------------------------------
@@ -22,8 +22,8 @@
 ;------------------------------------------------------------------------------------------------------------------------------
 ; Define functions constants
 ;------------------------------------------------------------------------------------------------------------------------------
-ONE_BYTE 		.equ	8								; 8-bits
-CYCLE_DELAY		.equ	18								; CYCLE_DELAY = ([63 cycles] - [9 cycles])/([3 cycles per iteration])
+ONE_BYTE 		.equ	8						; 8-bits
+CYCLE_DELAY		.equ	18						; CYCLE_DELAY = ([63 cycles] - [9 cycles])/([3 cycles per iteration])
 ;------------------------------------------------------------------------------------------------------------------------------
 ; Code Section
 ;------------------------------------------------------------------------------------------------------------------------------
