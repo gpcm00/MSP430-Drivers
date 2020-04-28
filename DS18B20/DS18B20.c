@@ -13,6 +13,8 @@
 
 // most of these functions follow the flow chart given in the datasheet
 
+
+
 void tsInit()
 {
     TS_BUS_H;                       // release the bus
