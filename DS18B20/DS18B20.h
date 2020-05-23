@@ -14,25 +14,6 @@
  * Do not attempt to call these function with multiple sensors on the bus as this will cause
  * the output of the sensor to be wired-ANDed.
  *
- * The truth table below represents the signal that will be on bus if two sensors are in the bus
- * and a function with the suffix _sS gets called:
- *                   ___________________________________________
- *                  |                         |                 |
- *                  | Logic level from sensor | Bus logic level |
- *                  |_________________________|_________________|
- *                  |            |            |                 |
- *                  |  Sensor_1  |  Sensor_2  |     Output      |
- *                  |____________|____________|_________________|
- *                  |            |            |                 |
- *                  |     0      |      0     |        0        |
- *                  |            |            |                 |
- *                  |     0      |      1     |        0        |
- *                  |            |            |                 |
- *                  |     1      |      0     |        0        |
- *                  |            |            |                 |
- *                  |     1      |      1     |        1        |
- *                  |____________|____________|_________________|
- *
  *  Created on: Feb 24, 2020
  *     Authors: Gian Moreira
  */
@@ -43,20 +24,22 @@
 
 
 
-
-
 // define input and output constants for the one-wire bus
 #define TS_BUS          P2IN                        // P2.2 is the input port for the 1-wire bus
 #define TS_OUT          P2OUT                       // P2.3 is driving an external pull-down transistor that will pull the bus low when needed
 
+
 #define TS_INIT_INPORT  P2DIR
 #define TS_INIT_OUTPORT P2DIR
+
 
 #define TS_OUTBIT       BIT2                        // Transistor is being driven by P2.2
 #define TS_INBIT        BIT3                        // 1-wire bus is directly connected to P2.3
 
+
 #define TS_CYCLE_DELAY_W  18                        // amount of cycles needed to delay for the write bit
 #define TS_CYCLE_DELAY_R  11                        // amount of cycles needed to delay for the read bit
+
 
 // The MSP430F5529 SCLK is 1.048 MHz, so these macros define the amount of clk cycles needed to achieve a certain amount of time
 #define TS_15us         16
@@ -66,21 +49,10 @@
 #define TS_480us        503
 
 
-
-
-
-
-
-
 #define TS_BUS_L        TS_OUT |=  TS_OUTBIT        // Since driving the bus low means writing a high to P2.2, this has been abstracted to simplify readability
 #define TS_BUS_H        TS_OUT &= ~TS_OUTBIT        // For the same reasons as above, releasing the bus was also abstracted                                                   
 
 #define TS_BUS_IS_LOW   !(TS_BUS&TS_INBIT)
-
-
-
-
-
 
 
 // corresponding byte and its definition inside the scratchpad
@@ -93,13 +65,6 @@
 // Note: bytes 5 to 7 are reserved
 
 
-
-
-
-
-
-
-
 // for temperature resolution
 #define TS_9BITS        0x1F
 #define TS_10BITS       0x3F
@@ -107,20 +72,8 @@
 #define TS_12BITS       0x7F
 
 
-
-
-
-
-
-
-
-
 #define TS_RST_DELAY    (TS_480us - 3)                  // Needs three less cycles since it takes a couple of clk cycles to drive the outputs
 #define TS_RST_SAMPLE   210                             // Safe amount of clock cycles to sample whether the slave responded after a reset
-
-
-
-
 
 
 // ROM commands
@@ -130,6 +83,7 @@
 #define SKIP_ROM        0xCC
 #define ALARM_SEARCH    0xEC
 
+
 // Function commands
 #define CONVERT_T       0x44
 #define WRITE_SPAD      0x4E        // write scratchpad command
@@ -137,11 +91,6 @@
 #define COPY_SPAD       0x48        // copy scratchpad command
 #define RECALL_E2       0xB8
 #define READ_PSUPPLY    0xB4        // read power supply command
-
-
-
-
-
 
 
 
