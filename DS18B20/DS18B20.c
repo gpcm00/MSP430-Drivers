@@ -18,6 +18,8 @@
 void tsInit()
 {
     TS_BUS_H;                       // release the bus
+	
+    // initialize the gpio
     TS_INIT_INPORT  &= ~TS_INBIT;
     TS_INIT_OUTPORT |=  TS_OUTBIT;
 }
@@ -28,8 +30,11 @@ void tsInit()
 
 int tsWrite(char byte)
 {
+    // if the reset pulse sends a feedback
     if(!tsMstRst())
+	// call write the byte and return it
         return tsWriteByte(byte);
+    // otherwise return an error
     else return -1;
 }
 
@@ -74,14 +79,16 @@ int tsGetAddr(DS18B20* sensor)
     bus with a single wire. I recommend using this function one sensor
     at a time to get the address instead of using the search sensor function   */
 
-
+    // if the reset pulse sends a feedback
     if(!tsMstRst())
     {
+	// send a read rom command and proceed to read 8 bits
         tsWriteByte(READ_ROM);
         tsReadData(sensor->addr, 8);
 
         return 0;
     }
+    // otherwise send an error
     else return -1;
 
 }
@@ -96,8 +103,10 @@ void tsMatchAddr(DS18B20 sensor)
 {
     volatile int i;
 
+    // send a match rom command
     tsWriteByte(MATCH_ROM);
 
+    // send the address of the sensors to be used
     for(i = 0; i < 8 ; i++)
         tsWriteByte(sensor.addr[i]);
 }
@@ -117,6 +126,7 @@ void tsConvertTemp()
 
     if(!tsMstRst())
     {
+	// send a skip rom command and convert the temperature of all sensors
         tsWriteByte(SKIP_ROM);
         tsWriteByte(CONVERT_T);
     }
